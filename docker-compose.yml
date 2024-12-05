@@ -1,16 +1,19 @@
 version: '3'
 services:
   app:
-    image: node:12.20.0
+    image: node:23.3.0
     container_name: node-dev
     command: "npm run dev"
     ports:
       - 3000:3000
     volumes:
       - ./app:/src
+      - ./.npm-global:$HOME/.local/.npm-global
     working_dir: /src
     environment:
-      NODE_ENV: development
+      - NODE_ENV=development
+      - NPM_CONFIG_PREFIX=$HOME/.local/.npm-global
+      - PATH=$HOME/.local/.npm-global/bin:$PATH
 #    depends_on:
 #      - postgresql
 #      - adminer
